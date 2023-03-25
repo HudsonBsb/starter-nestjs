@@ -15,7 +15,7 @@ export class CookieInterceptor implements NestInterceptor {
         const TOKEN = request.cookies[TOKEN_KEY];
         if (request.url === '/login') {
             return next
-                .handle()
+                .handle();
         } else {
             if (!TOKEN)
                 response.redirect('/login')
@@ -32,6 +32,5 @@ export class CookieInterceptor implements NestInterceptor {
                 }
             }
         }
-        response.redirect('/login');
     }
 }
