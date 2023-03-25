@@ -19,7 +19,7 @@ export class ViewController {
   @Get('pdf')
   pdf(@Res() res: Response) {
     return res.render('pdf', {
-      now: new Date().toLocaleDateString()
+      now: new Date().toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })
     });
   }
 }
