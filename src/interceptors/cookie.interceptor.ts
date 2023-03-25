@@ -13,19 +13,25 @@ export class CookieInterceptor implements NestInterceptor {
         const request: Request = context.switchToHttp().getRequest();
         const response: Response = context.switchToHttp().getResponse();
         const TOKEN = request.cookies[TOKEN_KEY];
-        if (request.url === '/login')
+        if (request.url === '/login') {
             return next
                 .handle()
-        else
-            try {
-                const verify = TOKEN && this.jwtService.verify(TOKEN);
-                if (!verify)
-                    response.location('/login');
-                else
-                    return next
-                        .handle()
-            } catch (e) {
-                response.redirect('/login');
+        } else {
+            if (!TOKEN)
+                response.redirect('/login')
+            else {
+                try {
+                    const verify = this.jwtService.verify(TOKEN);
+                    if (!verify)
+                        response.redirect('/login');
+                    else
+                        return next
+                            .handle()
+                } catch (e) {
+                    response.redirect('/login');
+                }
             }
+        }
+        response.redirect('/login');
     }
 }
