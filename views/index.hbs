@@ -1,0 +1,319 @@
+<html>
+  <head>
+    <title>Início Atacado</title>
+    <link rel='icon' type='image/png' href='/image/logo.png' />
+    <link rel='stylesheet' href='/css/index.css' />
+    <link rel='stylesheet' href='/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/css/all.css' />
+    <link rel='stylesheet' href='/css/sweetalert2.min.css' />
+    <link rel='stylesheet' href='/css/jquery.dataTables.min.css' />
+    <link rel='stylesheet' href='/css/all.min.css' />
+
+    <script type='text/javascript' src='/js/jquery.min.js'></script>
+    <script type='text/javascript' src='/js/bootstrap.min.js'></script>
+    <script type='text/javascript' src='/js/jquery.dataTables.min.js'></script>
+    <script
+      type='text/javascript'
+      src='/js/dataTables.bootstrap5.min.js'
+    ></script>
+    <script type='text/javascript' src='/js/index.js'></script>
+    <script type='text/javascript' src='/js/sweetalert2.all.min.js'></script>
+    <script type='text/javascript' src='/js/jquery.maskMoney.min.js'></script>
+    <script type='text/javascript' src='/js/jquery.mask.min.js'></script>
+
+  </head>
+  <body>
+    <div class='container'>
+      <div class='d-flex justify-content-center h-100'>
+        <table id='products' class='table table-striped' style='width:100%'>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Preço</th>
+              <th>Embalagem</th>
+              <th>Categoria</th>
+              <th>Atualização</th>
+              <th style='text-align: center; pointer-events: none;'>Ações</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Nome</th>
+              <th>Preço</th>
+              <th>Embalagem</th>
+              <th>Categoria</th>
+              <th>Atualização</th>
+              <th style='text-align: center; pointer-events: none;'>Ações</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+    <div
+      id='productModal'
+      class='modal fade'
+      tabindex='-1'
+      role='dialog'
+      aria-labelledby='myLargeModalLabel'
+      aria-hidden='true'
+    >
+      <div class='modal-dialog modal-lg'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <button
+              type='button'
+              class='close'
+              data-dismiss='modal'
+              aria-label='Close'
+            >
+              <span aria-hidden='true'>&times;</span>
+            </button>
+          </div>
+          <div class='modal-body'>
+            <div class='accordion' id='accordionModal'>
+              <div class='card'>
+                <div class='card-header' id='headingOne'>
+                  <h2 class='mb-0'>
+                    <button
+                      class='btn btn-link btn-block text-left acordion_link'
+                      type='button'
+                      data-toggle='collapse'
+                      data-target='#product'
+                      aria-expanded='true'
+                      aria-controls='product'
+                    >
+                      <h4>Cadastro de produtos</h4>
+                    </button>
+                  </h2>
+                </div>
+                <div
+                  id='product'
+                  class='collapse show'
+                  aria-labelledby='headingOne'
+                  data-parent='#accordionModal'
+                >
+                  <div class='card-body'>
+                    <form id='formProduct'>
+                      <div class='row'>
+                        <div class='form-group col-8'>
+                          <label
+                            for='nameProduct'
+                            class='col-form-label'
+                          >Nome:</label>
+                          <input
+                            type='text'
+                            class='form-control'
+                            id='nameProduct'
+                            name='name'
+                            required='true'
+                          />
+                        </div>
+                        <div class='form-group col-4'>
+                          <label
+                            for='price'
+                            class='col-form-label'
+                          >Preço:</label>
+                          <input
+                            type='text'
+                            class='form-control currency'
+                            id='price'
+                            name='price'
+                            required='true'
+                          />
+                        </div>
+                      </div>
+                      <div class='row'>
+                        <div class='form-group col-4'>
+                          <label
+                            for='packaging'
+                            class='col-form-label'
+                          >Embalagem:</label>
+                          <input
+                            type='text'
+                            class='form-control kg'
+                            id='packaging'
+                            name='packaging'
+                            required='true'
+                          />
+                        </div>
+                        <div class='form-group col-8'>
+                          <label
+                            for='categories'
+                            class='col-form-label'
+                          >Categoria:</label>
+                          <select
+                            id='categories'
+                            class='form-control categories'
+                            required='true'
+                          ></select>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class='card'>
+                <div class='card-header' id='headingTwo'>
+                  <h2 class='mb-0'>
+                    <button
+                      class='btn btn-link btn-block text-left collapsed acordion_link'
+                      type='button'
+                      data-toggle='collapse'
+                      data-target='#category'
+                      aria-expanded='false'
+                      aria-controls='category'
+                    >
+                      <h4>Cadastro de categoria</h4>
+                    </button>
+                  </h2>
+                </div>
+                <div
+                  id='category'
+                  class='collapse'
+                  aria-labelledby='headingTwo'
+                  data-parent='#accordionModal'
+                >
+                  <div class='card-body'>
+                    <form id='formCategory'>
+                      <div class='row'>
+                        <div class='col-12'>
+                          <label
+                            for='nameCategory'
+                            class='col-form-label'
+                          >Nome:</label>
+                          <input
+                            type='text'
+                            class='form-control'
+                            id='nameCategory'
+                            name='name'
+                            required='true'
+                          />
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='modal-footer'>
+            <button
+              type='button'
+              class='btn btn-outline-secondary'
+              data-dismiss='modal'
+            >Cancelar</button>
+            <button
+              id='btnSaveProduct'
+              type='button'
+              class='btn btn-primary btnProduct'
+              onclick='saveProduct()'
+            >Salvar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      id='updateProductModal'
+      class='modal fade'
+      tabindex='-1'
+      role='dialog'
+      aria-labelledby='myLargeModalLabel'
+      aria-hidden='true'
+    >
+      <div class='modal-dialog modal-lg'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <h4>Atualizar produto</h4>
+            <button
+              type='button'
+              class='close'
+              data-dismiss='modal'
+              aria-label='Close'
+            >
+              <span aria-hidden='true'>&times;</span>
+            </button>
+          </div>
+          <div class='modal-body'>
+            <form id='formProductUpdate'>
+              <input
+                hidden='true'
+                type='text'
+                class='form-control'
+                id='_idUpdate'
+                name='_id'
+                required='true'
+              />
+              <div class='row'>
+                <div class='form-group col-8'>
+                  <label for='nameProduct' class='col-form-label'>Nome:</label>
+                  <input
+                    type='text'
+                    class='form-control'
+                    id='nameUpdate'
+                    name='name'
+                    required='true'
+                  />
+                </div>
+                <div class='form-group col-4'>
+                  <label for='price' class='col-form-label'>Preço:</label>
+                  <input
+                    type='text'
+                    class='form-control currency'
+                    id='priceUpdate'
+                    name='price'
+                    required='true'
+                  />
+                </div>
+              </div>
+              <div class='row'>
+                <div class='form-group col-4'>
+                  <label
+                    for='packaging'
+                    class='col-form-label'
+                  >Embalagem:</label>
+                  <input
+                    type='text'
+                    class='form-control kg'
+                    id='packagingUpdate'
+                    name='packaging'
+                    required='true'
+                  />
+                </div>
+                <div class='form-group col-8'>
+                  <label
+                    for='categoriesUpdate'
+                    class='col-form-label'
+                  >Categoria:</label>
+                  <select
+                    readonly='true'
+                    disabled='true'
+                    id='categoriesUpdate'
+                    class='form-control categories'
+                    required='true'
+                  ></select>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class='modal-footer'>
+            <button
+              type='button'
+              class='btn btn-outline-secondary'
+              data-dismiss='modal'
+            >Cancelar</button>
+            <button
+              id='btnUpdateProduct'
+              type='button'
+              class='btn btn-primary btnProduct'
+              onclick='updateProduct()'
+            >Atualizar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='table-row'>
+      <div id='left' class='table-col'></div>
+      <div id='right' class='table-col'></div>
+    </div>
+  </body>
+</html>

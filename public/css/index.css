@@ -1,0 +1,70 @@
+html,
+body {
+  height: 100%;
+}
+.container {
+  height: 100%;
+  align-content: center;
+  max-width: 100% !important;
+}
+.input-group-prepend span {
+  width: 50px;
+  background-color: #00ad28;
+  color: black;
+  border: 0 !important;
+}
+input:focus {
+  outline: 0 0 0 0 !important;
+  box-shadow: 0 0 0 0 !important;
+}
+.links {
+  color: white;
+}
+.links a {
+  margin-left: 4px;
+}
+.icon {
+  width: 25px;
+}
+.dataTables_filter {
+  float: right !important;
+}
+.dataTables_paginate {
+  float: right !important;
+}
+.dataTables_length {
+  padding-top: 15px;
+}
+.dataTables_filter {
+  padding-top: 15px;
+}
+.acordion_link {
+  color: rgb(46, 46, 46) !important;
+  font-style: normal !important;
+  text-decoration: none !important;
+}
+
+.rounded {
+  height: 25px !important;
+  width: 25px !important;
+  padding-left: 5px !important;
+  padding-bottom: 5px !important;
+}
+
+.pagination li {
+  padding: 0 0 0 0 !important;
+  margin: 6 0 0 0 !important;
+}
+
+.pagination li:hover {
+  border: none !important;
+  background: none !important;
+}
+
+table.dataTable thead .sorting:last-child {
+  background-image: none !important;
+}
+
+.float-left:last-child {
+  margin-left: 15px;
+}

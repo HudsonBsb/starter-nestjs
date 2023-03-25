@@ -1,0 +1,60 @@
+<html>
+  <head>
+    <title>Gerador de PDF</title>
+    <link rel='stylesheet' href='/css/pdf.css' />
+    <link rel='icon' type='image/png' href='/image/logo.png' />
+    <script type='text/javascript' src='/js/pdf.js'></script>
+    <script type='text/javascript' src='/js/jquery.min.js'></script>
+    <script src='/js/jspdf.umd.min.js'></script>
+    <script src='/js/html2canvas.min.js'></script>
+  </head>
+  <div class='overlay'><div><div class='loader'>Aguarde...</div></div></div>
+  <body>
+    <div class='content'>
+      <div class='row'>
+        <div class='col-logo'>
+          <img
+            src='/image/logo.png'
+            class='logotipo'
+            width='50'
+            alt='Logo BSB Nutri'
+          />
+        </div>
+        <div class='col-info'>
+          <div style='width: max-content;'>
+            <h4 style='margin: 15px 0 0 0; font-weight: bold;'>BSB Nutri
+              Distribuidora de Alimentos LTDA</h4>
+            <p style='margin: 0; font-size: 10px; text-align: center;'>Telefone:
+              (61) 99807-6211</p>
+          </div>
+        </div>
+      </div>
+      <div class='row'>
+        <p
+          style='border: solid 1px gray; width: 100%; margin: 0 3px 0 3px; background-color: yellow; font-size: 12px; text-align: center;'
+        >Tabela atualizada {{now}}</p>
+      </div>
+      <div class='table-row'>
+        <div id='left' class='table-col'></div>
+        <div id='right' class='table-col'></div>
+      </div>
+      <div
+        style='display: block; margin: auto; width: max-content;'
+        class='row'
+      >
+        <div
+          style='background-color: rgb(48, 48, 138); color: white; border: solid 1px black; padding: 15px;'
+        >
+          <p>► PREÇOS FOB.</p>
+          <p>► BOLETOS COM PARCELA MÍNIMA DE R$ 600,00.</p>
+          <p>► EMBALAGENS DE 10KG SOMENTE PRODUTOS QUE TIVEREM ESSA OPÇÃO NA
+            TABELA</p>
+          <p style='text-align: center;'>**CHÁS SOMENTE SOB ENCOMENDA**</p>
+          <p>TODOS OS PEDIDOS SUJEITOS A CONFIRMAÇÃO DE ESTOQUE E LIBERAÇÃO
+            CADASTRAL.</p>
+          <p style='text-align: center;'>NÃO ENTREGAMOS EM TRANSPORTADORA</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
