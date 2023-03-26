@@ -316,7 +316,7 @@ function updateProduct() {
         .row(rowSelected[0])
         .data({
           name,
-          price,
+          price: Number(price),
           packaging,
           category: { name: $('#categoriesUpdate option:selected').html() },
           updatedAt,

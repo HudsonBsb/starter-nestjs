@@ -85,9 +85,19 @@ async function generatePdf() {
   };
   doc.html(body, {
     callback: function (doc) {
-      doc.save(
-        'TABELA_' + new Date().toLocaleDateString().replace(/\D/g, '') + '.pdf',
-      );
+      if (
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent,
+        )
+      ) {
+        doc.output('dataurlnewwindow');
+      } else {
+        doc.save(
+          'TABELA_' +
+            new Date().toLocaleDateString().replace(/\D/g, '') +
+            '.pdf',
+        );
+      }
       $('.content').fadeOut();
       $('.overlay').fadeIn();
       window.close();
