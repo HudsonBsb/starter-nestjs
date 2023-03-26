@@ -1,14 +1,16 @@
 const TOKEN_KEY = 'X-TOKEN-BSBNUTRI';
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const TOKEN = (await cookieStore.get(TOKEN_KEY)).value;
   $.get({
     url: '/api/categories?products=true',
     success: (categories) => {
       generateTable(categories);
     },
     beforeSend: function (request) {
-      request.setRequestHeader('Authorization', `Bearer ${TOKEN}`);
+      request.setRequestHeader(
+        'Authorization',
+        `Bearer ${CookieJS.get(TOKEN_KEY)}`,
+      );
     },
   });
 });
@@ -94,3 +96,20 @@ async function generatePdf() {
     y: 1,
   });
 }
+
+const CookieJS = {
+  get: function (c_name) {
+    if (document.cookie.length > 0) {
+      var c_start = document.cookie.indexOf(c_name + '=');
+      if (c_start != -1) {
+        c_start = c_start + c_name.length + 1;
+        var c_end = document.cookie.indexOf(';', c_start);
+        if (c_end == -1) {
+          c_end = document.cookie.length;
+        }
+        return unescape(document.cookie.substring(c_start, c_end));
+      }
+    }
+    return '';
+  },
+};
