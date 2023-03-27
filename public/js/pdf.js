@@ -29,8 +29,8 @@ function generateTable(categories) {
     html += `
                 <thead>
                   <tr>
-                    <th style="width: 66%">${cat.name}</th>
-                    <th style="width: 22%">EMBALAGEM</th>
+                    <th style="width: 62%">${cat.name}</th>
+                    <th style="width: 20%">EMBALAGEM</th>
                     <th>R$/KG</th>
                     </tr>
                     </thead>
@@ -41,9 +41,16 @@ function generateTable(categories) {
       } else {
         right++;
       }
-      const price = (prod.price || 0)
-        .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-        .replace(/[^0-9.,]/g, '');
+      let price = 0;
+      if (prod.status === 'lacking') {
+        price = 'em falta';
+      } else if (prod.status === 'to_consult') {
+        price = 'consultar';
+      } else {
+        price = (prod.price || 0)
+          .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+          .replace(/[^0-9.,]/g, '');
+      }
       const updatedAt = new Date(prod.updatedAt).toLocaleDateString();
       const now = new Date().toLocaleDateString();
       let style = '';

@@ -46,10 +46,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     columns: [
       { data: 'name' },
       {
-        data: (o) =>
-          (o.price || 0)
-            .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-            .replace(/[^0-9.,]/g, ''),
+        data: (o) => {
+          if (o.status === 'lacking') return 'EM FALTA';
+          else if (o.status === 'to_consult') return 'CONSULTAR';
+          else
+            return Number(o.price || 0)
+              .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+              .replace(/[^0-9.,]/g, '');
+        },
       },
       { data: 'packaging' },
       { data: 'category.name' },
@@ -62,11 +66,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         },
       },
       {
-        data: ({ _id, name, price, packaging, category }) => `
+        data: ({ _id, name, status, price, packaging, category }) => `
       <div style="text-align: center;">
       <button onclick="editModal(this.value)" value='${JSON.stringify({
         _id,
         name,
+        status,
         price,
         packaging,
         category,
@@ -154,6 +159,10 @@ function saveProduct() {
     .map((o) => ({ [o.name]: o.value }))
     .reduce((a, b) => Object.assign({}, a, b));
 
+  if ($('#formProduct').find('[name=price]').is(':disabled')) {
+    delete data['price'];
+  }
+
   if (!Object.values(data).every((o) => o) || !$('#categories').val()) {
     alert('Preencha todos os campos.', 'error');
     return false;
@@ -162,9 +171,10 @@ function saveProduct() {
   showBtnLoading();
 
   data['category'] = { id: $('#categories').val() };
-  data['price'] = Number(
-    data['price'].replace(/\D/g, '').replace(/(\d+)(\d{2})/g, '$1.$2'),
-  );
+  if (data['price'])
+    data['price'] = Number(
+      data['price'].replace(/\D/g, '').replace(/(\d+)(\d{2})/g, '$1.$2'),
+    );
   data['packaging'] =
     data['packaging'].replace(/\D/g, '') + data['packagingType'];
   delete data['packagingType'];
@@ -263,8 +273,14 @@ function listenerBtnDelete() {
 }
 
 function editModal(str) {
-  const { _id, name, price, packaging, category, updatedAt } = JSON.parse(str);
+  const { _id, name, status, price, packaging, category, updatedAt } =
+    JSON.parse(str);
   $('#formProductUpdate #_idUpdate').val(_id);
+  if (status === 'lacking' || status === 'to_consult')
+    $('#formProductUpdate #priceUpdate').prop('disabled', true);
+  $('#formProductUpdate [name=status]')
+    .filter(`[value=${status}]`)
+    .prop('checked', true);
   $('#formProductUpdate #nameUpdate').val(name);
   $('#formProductUpdate #priceUpdate').val(
     (price || 0).toLocaleString('pt-BR', {
@@ -287,6 +303,10 @@ function updateProduct() {
     .map((o) => ({ [o.name]: o.value }))
     .reduce((a, b) => Object.assign({}, a, b));
 
+  if ($('#formProductUpdate').find('[name=price]').is(':disabled')) {
+    delete data['price'];
+  }
+
   if (!Object.values(data).every((o) => o)) {
     alert('Preencha todos os campos.', 'error');
     return false;
@@ -294,9 +314,10 @@ function updateProduct() {
 
   showBtnLoading();
 
-  data['price'] = Number(
-    data['price'].replace(/\D/g, '').replace(/(\d+)(\d{2})/g, '$1.$2'),
-  );
+  if (data['price'])
+    data['price'] = Number(
+      data['price'].replace(/\D/g, '').replace(/(\d+)(\d{2})/g, '$1.$2'),
+    );
   data['packaging'] =
     data['packaging'].replace(/\D/g, '') + data['packagingType'];
   data['category'] = {
@@ -311,13 +332,15 @@ function updateProduct() {
     beforeSend: function (request) {
       request.setRequestHeader('Authorization', `Bearer ${TOKEN}`);
     },
-    success: ({ name, price, packaging, updatedAt }) => {
+    success: ({ _id, status, name, price, packaging, updatedAt }) => {
       $('#updateProductModal').modal('hide');
       $('#formProduct')[0].reset();
       dataTable
         .row(rowSelected[0])
         .data({
+          _id,
           name,
+          status,
           price: Number(price),
           packaging,
           category: {
@@ -366,4 +389,15 @@ function kgUnChange(that) {
   const packaging = $(that).parents('form').find('[name=packaging]');
   const pck = packaging.val().replace(/\D/g, '') + that.value;
   packaging.val(pck);
+}
+
+function changeStatusProduct(that) {
+  const priceTag = $(that).parents('form').find('[name=price]');
+  if (that.value === 'lacking' || that.value === 'to_consult') {
+    priceTag.attr('disabled', true);
+  } else {
+    if (priceTag.is(':disabled')) {
+      priceTag.removeAttr('disabled');
+    }
+  }
 }

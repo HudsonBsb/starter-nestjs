@@ -94,6 +94,48 @@
                 >
                   <div class='card-body'>
                     <form id='formProduct'>
+                      <div style='padding-left: 15px;' class='row'>
+                        <div class='form-group col-4 form-check'>
+                          <input
+                            class='form-check-input'
+                            type='radio'
+                            name='status'
+                            value='stock'
+                            onclick='changeStatusProduct(this)'
+                            id='stock'
+                            checked
+                          />
+                          <label class='form-check-label' for='stock'>
+                            Produto em estoque
+                          </label>
+                        </div>
+                        <div class='form-group col-4 form-check'>
+                          <input
+                            class='form-check-input'
+                            type='radio'
+                            name='status'
+                            value='lacking'
+                            id='lacking'
+                            onclick='changeStatusProduct(this)'
+                          />
+                          <label class='form-check-label' for='lacking'>
+                            Produto em falta
+                          </label>
+                        </div>
+                        <div class='form-group col-4 form-check'>
+                          <input
+                            class='form-check-input'
+                            type='radio'
+                            name='status'
+                            id='to_consult'
+                            value='to_consult'
+                            onclick='changeStatusProduct(this)'
+                          />
+                          <label class='form-check-label' for='to_consult'>
+                            Preço a consultar
+                          </label>
+                        </div>
+                      </div>
                       <div class='row'>
                         <div class='form-group col-8'>
                           <label
@@ -259,6 +301,48 @@
                 name='_id'
                 required='true'
               />
+              <div style="padding-left: 15px;" class='row'>
+                <div class='form-group col-4 form-check'>
+                  <input
+                    class='form-check-input'
+                    type='radio'
+                    name='status'
+                    value='stock'
+                    onclick='changeStatusProduct(this)'
+                    id='stock'
+                    checked
+                  />
+                  <label class='form-check-label' for='stock'>
+                    Produto em estoque
+                  </label>
+                </div>
+                <div class='form-group col-4 form-check'>
+                  <input
+                    class='form-check-input'
+                    type='radio'
+                    name='status'
+                    value='lacking'
+                    id='lacking'
+                    onclick='changeStatusProduct(this)'
+                  />
+                  <label class='form-check-label' for='lacking'>
+                    Produto em falta
+                  </label>
+                </div>
+                <div class='form-group col-4 form-check'>
+                  <input
+                    class='form-check-input'
+                    type='radio'
+                    name='status'
+                    id='to_consult'
+                    value='to_consult'
+                    onclick='changeStatusProduct(this)'
+                  />
+                  <label class='form-check-label' for='to_consult'>
+                    Preço a consultar
+                  </label>
+                </div>
+              </div>
               <div class='row'>
                 <div class='form-group col-8'>
                   <label for='nameProduct' class='col-form-label'>Nome:</label>

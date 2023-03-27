@@ -26,8 +26,8 @@ export class ProductService {
         return this.productModel.find().populate('category');
     }
 
-    async update({ _id, ...product }: Product) {
-        await this.productModel.updateOne({ _id }, { ...product });
+    async update(product: Product) {
+        await this.productModel.updateOne({ _id: product._id }, { ...product });
         product.updatedAt = new Date();
         return product;
     }
