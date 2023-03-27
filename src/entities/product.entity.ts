@@ -12,7 +12,7 @@ export class Product extends Document<Product> {
     price: number;
 
     @Prop()
-    packaging: number;
+    packaging: string;
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Category' })
     category: Category;

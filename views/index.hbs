@@ -130,13 +130,29 @@
                           >Embalagem:</label>
                           <input
                             type='text'
-                            class='form-control kg'
+                            class='form-control kg_un'
                             id='packaging'
                             name='packaging'
                             required='true'
                           />
                         </div>
-                        <div class='form-group col-8'>
+                        <div class='form-group col-3'>
+                          <label
+                            for='packagingType'
+                            class='col-form-label'
+                          >KG/UN:</label>
+                          <select
+                            id='packagingType'
+                            class='form-control'
+                            name='packagingType'
+                            required='true'
+                            onchange='kgUnChange(this)'
+                          >
+                            <option value='KG' selected='true'>KG</option>
+                            <option value='UN'>UN</option>
+                          </select>
+                        </div>
+                        <div class='form-group col-5'>
                           <label
                             for='categories'
                             class='col-form-label'
@@ -273,20 +289,34 @@
                   >Embalagem:</label>
                   <input
                     type='text'
-                    class='form-control kg'
+                    class='form-control kg_un'
                     id='packagingUpdate'
                     name='packaging'
                     required='true'
                   />
                 </div>
-                <div class='form-group col-8'>
+                <div class='form-group col-3'>
+                  <label
+                    for='packagingTypeUpdate'
+                    class='col-form-label'
+                  >KG/UN:</label>
+                  <select
+                    id='packagingTypeUpdate'
+                    name='packagingType'
+                    class='form-control'
+                    required='true'
+                    onchange='kgUnChange(this)'
+                  >
+                    <option value='KG' selected='true'>KG</option>
+                    <option value='UN'>UN</option>
+                  </select>
+                </div>
+                <div class='form-group col-5'>
                   <label
                     for='categoriesUpdate'
                     class='col-form-label'
                   >Categoria:</label>
                   <select
-                    readonly='true'
-                    disabled='true'
                     id='categoriesUpdate'
                     class='form-control categories'
                     required='true'

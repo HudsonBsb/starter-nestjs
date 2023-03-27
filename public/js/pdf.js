@@ -23,6 +23,7 @@ function generateTable(categories) {
   let htmlLeft = '';
   let htmlRight = '';
   categories.forEach((cat) => {
+    if (!cat.products.length) return;
     side = side === 'left' && left >= right ? 'right' : 'left';
     html += '<table class="table-pdf">';
     html += `
@@ -40,7 +41,9 @@ function generateTable(categories) {
       } else {
         right++;
       }
-      const price = (prod.price || 0).toLocaleString();
+      const price = (prod.price || 0)
+        .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+        .replace(/[^0-9.,]/g, '');
       const updatedAt = new Date(prod.updatedAt).toLocaleDateString();
       const now = new Date().toLocaleDateString();
       let style = '';
@@ -49,13 +52,11 @@ function generateTable(categories) {
       <tbody>
       <tr${style}>
       <td>${prod.name}</td>
-                          <td>${prod.packaging}KG</td>
-                          <td>${
-                            /[.]/g.test(prod.price) ? price : price + ',00'
-                          }</td>
-                          </tr>
-                          </tbody>
-                          `;
+      <td>${prod.packaging}</td>
+      <td>${price}</td>
+      </tr>
+      </tbody>
+      `;
     });
     html += '</table>\n';
     if (side === 'left') {

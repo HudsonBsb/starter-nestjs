@@ -52,6 +52,6 @@ export class ApiController {
   @Delete('products/:id')
   @AuthGuard()
   async deleteProduct(@Param('id') id: string) {
-    return { ok: true };
+    return this.productService.delete(id);
   }
 }

@@ -20,11 +20,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     affixesStay: true,
   });
 
-  $('.kg').maskMoney({
+  $('.kg_un').maskMoney({
     suffix: 'KG',
     allowNegative: false,
     thousands: '',
     decimal: '.',
+    precision: 0,
     affixesStay: true,
   });
 
@@ -50,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
             .replace(/[^0-9.,]/g, ''),
       },
-      { data: (o) => o.packaging + 'KG' },
+      { data: 'packaging' },
       { data: 'category.name' },
       {
         data: {
@@ -164,9 +165,9 @@ function saveProduct() {
   data['price'] = Number(
     data['price'].replace(/\D/g, '').replace(/(\d+)(\d{2})/g, '$1.$2'),
   );
-  data['packaging'] = Number(
-    data['packaging'].replace(/\D/g, '').replace(/(\d+)(\d{2})/g, '$1.$2'),
-  );
+  data['packaging'] =
+    data['packaging'].replace(/\D/g, '') + data['packagingType'];
+  delete data['packagingType'];
 
   $.post({
     url: '/api/products',
@@ -271,11 +272,9 @@ function editModal(str) {
       currency: 'BRL',
     }),
   );
-  $('#formProductUpdate #packagingUpdate').val(
-    (packaging || 0)
-      .toFixed(2)
-      .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-      .replace(/[^0-9.]/g, '') + 'KG',
+  $('#formProductUpdate #packagingUpdate').val(packaging);
+  $('#formProductUpdate #packagingTypeUpdate').val(
+    packaging.replace(/\d/g, ''),
   );
   $('#formProductUpdate #categoriesUpdate').val(category._id);
   $('#formProductUpdate #updatedAtUpdate').val(updatedAt);
@@ -298,9 +297,12 @@ function updateProduct() {
   data['price'] = Number(
     data['price'].replace(/\D/g, '').replace(/(\d+)(\d{2})/g, '$1.$2'),
   );
-  data['packaging'] = Number(
-    data['packaging'].replace(/\D/g, '').replace(/(\d+)(\d{2})/g, '$1.$2'),
-  );
+  data['packaging'] =
+    data['packaging'].replace(/\D/g, '') + data['packagingType'];
+  data['category'] = {
+    _id: $('#categoriesUpdate option:selected').val(),
+  };
+  delete data['packagingType'];
 
   $.ajax({
     method: 'PUT',
@@ -318,7 +320,10 @@ function updateProduct() {
           name,
           price: Number(price),
           packaging,
-          category: { name: $('#categoriesUpdate option:selected').html() },
+          category: {
+            _id: $('#categoriesUpdate option:selected').val(),
+            name: $('#categoriesUpdate option:selected').html(),
+          },
           updatedAt,
         })
         .draw(false);
@@ -348,3 +353,17 @@ const CookieJS = {
     return '';
   },
 };
+
+function kgUnChange(that) {
+  $('.kg_un').maskMoney({
+    suffix: that.value,
+    allowNegative: false,
+    thousands: '',
+    decimal: that.value === 'UN' ? '' : '.',
+    precision: 0,
+    affixesStay: true,
+  });
+  const packaging = $(that).parents('form').find('[name=packaging]');
+  const pck = packaging.val().replace(/\D/g, '') + that.value;
+  packaging.val(pck);
+}

@@ -31,4 +31,8 @@ export class ProductService {
         product.updatedAt = new Date();
         return product;
     }
+
+    async delete(id: string) {
+        return this.productModel.deleteOne({ _id: id });
+    }
 }
