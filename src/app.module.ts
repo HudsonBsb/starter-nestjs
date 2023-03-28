@@ -22,7 +22,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         secret: config.get<string>('JWT_SECRET'),
-        signOptions: { expiresIn: '2h' }
+        signOptions: { expiresIn: '1d' }
       })
     }),
     MongooseModule.forRootAsync({

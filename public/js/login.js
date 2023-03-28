@@ -76,7 +76,7 @@ const CookieJS = {
   },
   set: function (c_name, value) {
     var exdate = new Date();
-    exdate.setHours(exdate.getHours() + 2);
+    exdate.setDate(exdate.getDate() + 2);
     document.cookie =
       c_name + '=' + escape(value) + '; expires=' + exdate.toUTCString();
   },
