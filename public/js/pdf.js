@@ -16,15 +16,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function generateTable(categories) {
-  let left = 0;
-  let right = 0;
-  let side = 'left';
+  const left =
+    categories.reduce((sum, obj) => sum + obj.products.length, 0) / 2;
+  let count = 0;
   let html = '';
   let htmlLeft = '';
   let htmlRight = '';
   categories.forEach((cat) => {
     if (!cat.products.length) return;
-    side = side === 'left' && left >= right ? 'right' : 'left';
     html += '<table class="table-pdf">';
     html += `
                 <thead>
@@ -36,11 +35,7 @@ function generateTable(categories) {
                     </thead>
                     `;
     cat.products.forEach((prod) => {
-      if (side === 'left') {
-        left++;
-      } else {
-        right++;
-      }
+      count++;
       let price = 0;
       if (prod.status === 'lacking') {
         price = 'em falta';
@@ -66,7 +61,7 @@ function generateTable(categories) {
       `;
     });
     html += '</table>\n';
-    if (side === 'left') {
+    if (count < left) {
       htmlLeft += html;
     } else {
       htmlRight += html;
