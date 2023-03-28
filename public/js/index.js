@@ -288,7 +288,16 @@ function editModal(str) {
       currency: 'BRL',
     }),
   );
+  const kgUn = packaging.replace(/\d/g, '');
   $('#formProductUpdate #packagingUpdate').val(packaging);
+  $('#formProductUpdate #packagingUpdate').maskMoney({
+    suffix: kgUn,
+    allowNegative: false,
+    thousands: '',
+    decimal: kgUn === 'UN' ? '' : '.',
+    precision: 0,
+    affixesStay: true,
+  });
   $('#formProductUpdate #packagingTypeUpdate').val(
     packaging.replace(/\d/g, ''),
   );
