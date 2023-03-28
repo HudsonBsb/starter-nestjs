@@ -19,17 +19,18 @@ export class ProductService {
         this.categoryService.addProduct(category.id, created);
         await this.productModel.updateOne({ _id: created.id }, { category: cat });
         created.category = cat;
-        return created;
+        return new Product.Model(created);
     }
 
     async findAll() {
-        return this.productModel.find().populate('category');
+        return (await this.productModel.find().populate('category'))
+            .map(product => new Product.Model(product));
     }
 
     async update(product: Product) {
         await this.productModel.updateOne({ _id: product._id }, { ...product });
         product.updatedAt = new Date();
-        return product;
+        return new Product.Model(product);
     }
 
     async delete(id: string) {

@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       },
       dataSrc: (o) => o,
     },
-    order: [[4, 'desc']],
+    order: [[0, 'asc']],
     columns: [
       { data: 'name' },
       {
@@ -58,12 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       { data: 'packaging' },
       { data: 'category.name' },
       {
-        data: {
-          _: (o) => {
-            return new Date(o.updatedAt).toLocaleDateString();
-          },
-          sort: (o) => new Date(o.updatedAt).getTime(),
-        },
+        data: (o) => new Date(o.updatedAt).toLocaleDateString('pt-BR'),
       },
       {
         data: ({ _id, name, status, price, packaging, category }) => `

@@ -31,3 +31,27 @@ export const ProductSchema = SchemaFactory.createForClass(Product)
         product.updatedAt = new Date();
         next();
     });
+
+export namespace Product {
+    export class Model {
+        _id: string;
+        name: string;
+        price: number;
+        packaging: string;
+        category: Category.Model;
+        status: ProductStatus;
+        updatedAt: Date;
+        constructor(product: Product) {
+            if (product) {
+                this._id = product.id;
+                this.name = product.name;
+                this.price = product.price;
+                this.packaging = product.packaging;
+                if (product.category && product.category.name)
+                    this.category = new Category.Model(product.category);
+                this.status = product.status;
+                this.updatedAt = product.updatedAt;
+            }
+        }
+    }
+}

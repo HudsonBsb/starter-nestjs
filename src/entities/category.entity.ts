@@ -16,3 +16,19 @@ export class Category extends Document<Category> {
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category)
+
+export namespace Category {
+    export class Model {
+        _id: string;
+        name: string;
+        products: Product.Model[];
+        constructor(category: Category) {
+            if (category) {
+                this._id = category.id;
+                this.name = category.name;
+                if (category.products && category.products[0]?.name)
+                    this.products = category.products.map(product => new Product.Model(product));
+            }
+        }
+    }
+}

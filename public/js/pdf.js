@@ -16,13 +16,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function generateTable(categories) {
-  const left =
+  let category;
+  const half =
     categories.reduce((sum, obj) => sum + obj.products.length, 0) / 2;
+  let left = true;
   let count = 0;
   let html = '';
   let htmlLeft = '';
   let htmlRight = '';
-  categories.forEach((cat) => {
+  categories.forEach((cat, key) => {
     if (!cat.products.length) return;
     html += '<table class="table-pdf">';
     html += `
@@ -33,9 +35,15 @@ function generateTable(categories) {
                     <th>R$/KG</th>
                     </tr>
                     </thead>
+                    <tbody>
                     `;
     cat.products.forEach((prod) => {
       count++;
+      if (count < half) {
+        category = categories[key + 1]?.name;
+      }
+      left = left && cat.name !== category;
+      console.log(`Left => ${left}, Produto => ${prod.name}`);
       let price = 0;
       if (prod.status === 'lacking') {
         price = 'em falta';
@@ -51,17 +59,16 @@ function generateTable(categories) {
       let style = '';
       if (now === updatedAt) style = ' style="background-color: yellow;"';
       html += `
-      <tbody>
       <tr${style}>
       <td>${prod.name}</td>
       <td>${prod.packaging}</td>
       <td>${price}</td>
       </tr>
-      </tbody>
       `;
     });
-    html += '</table>\n';
-    if (count < left) {
+    html += `</tbody>
+              </table>\n`;
+    if (left) {
       htmlLeft += html;
     } else {
       htmlRight += html;
@@ -71,6 +78,7 @@ function generateTable(categories) {
   $('#left').html(htmlLeft);
   $('#right').html(htmlRight);
   $('.content').fadeIn();
+  // $('.overlay').fadeOut();
   generatePdf();
 }
 
@@ -80,13 +88,13 @@ async function generatePdf() {
   doc.setFont('helvetica');
   var body = document.querySelector('body');
   doc.setFontSize(5);
-  margins = {
-    top: 40,
-    bottom: 60,
-    left: 40,
-    width: 522,
-  };
+
+  pageHeight = doc.internal.pageSize.height;
+
+  // doc.addPage(612, 791);
+
   doc.html(body, {
+    margin: [5.6, 0, 5.6, 0],
     callback: function (doc) {
       if (
         /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(

@@ -13,12 +13,18 @@ export class CategoryService {
         private readonly categoryModel: Model<Category>) { }
 
     async create(category: Category) {
-        return new this.categoryModel(category).save();
+        return new Category.Model(await new this.categoryModel(category).save());
     }
 
     async findAll(products: boolean) {
-        const query = this.categoryModel.find();
-        return products ? query.populate('products') : query;
+        const query = this.categoryModel.find().sort({ name: 'asc' });
+        if (products) {
+            return (await query.populate({ path: 'products', options: { sort: { 'name': 1 } } }))
+                .map(category => new Category.Model(category))
+        } else {
+            return (await query)
+                .map(category => new Category.Model(category))
+        }
     }
 
     async findById(id: string) {
