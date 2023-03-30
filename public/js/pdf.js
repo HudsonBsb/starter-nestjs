@@ -39,11 +39,9 @@ function generateTable(categories) {
                     `;
     cat.products.forEach((prod) => {
       count++;
-      if (count < half) {
-        category = categories[key + 1]?.name;
+      if (count > half) {
+        left = false;
       }
-      left = left && cat.name !== category;
-      console.log(`Left => ${left}, Produto => ${prod.name}`);
       let price = 0;
       if (prod.status === 'lacking') {
         price = 'em falta';
@@ -78,7 +76,7 @@ function generateTable(categories) {
   $('#left').html(htmlLeft);
   $('#right').html(htmlRight);
   $('.content').fadeIn();
-  // $('.overlay').fadeOut();
+  $('.overlay').fadeOut();
   generatePdf();
 }
 
