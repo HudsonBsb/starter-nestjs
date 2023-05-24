@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 function generateTable(categories) {
   let category;
   const half =
-    categories.reduce((sum, obj) => sum + obj.products.length, 0) / 2;
+    categories.reduce((sum, obj) => sum + (obj.products || []).length, 0) / 2;
   let left = true;
   let count = 0;
   let html = '';
