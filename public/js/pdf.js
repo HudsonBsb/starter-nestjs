@@ -25,7 +25,7 @@ function generateTable(categories) {
   let htmlLeft = '';
   let htmlRight = '';
   categories.forEach((cat, key) => {
-    if (!cat.products.length) return;
+    if (!(cat.products || []).length) return;
     html += '<table class="table-pdf">';
     html += `
                 <thead>
